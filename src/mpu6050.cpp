@@ -14,6 +14,7 @@ using namespace std;
 #define GYRO_X_OUT 0x43 
 #define GYRO_Y_OUT 0x45
 #define GYRO_Z_OUT 0x47
+#define LPF_ADDR 0x1a
 
 #define PWR_MGMT_1 0x6B  //PWR_MGMT_1
 #define PWR_MGMT_2 0x6c  //PWR_MGMT_2
@@ -44,6 +45,8 @@ int main(int argc, char **argv) {
   }
   // Device starts in sleep mode so wake it up.
   wiringPiI2CWriteReg16(fd, PWR_MGMT_1, 0);
+  // Set LRF
+  wiringPiI2CWriteReg16(fd, LPF_ADDR, 0x03);
 
   // Start ROS node stuff.
   ros::init(argc, argv, "mpu6050");
